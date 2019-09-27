@@ -1,6 +1,7 @@
 require 'paint'
+require './game_library'
+include GameLibrary
 
-puts Paint["Welcome to Tic Tac Toe! Would you like to play as X or O?", :magenta]
-puts Paint["(Please enter X or O and then hit enter)", :yellow]
-a = gets.strip()
-puts "you said " + a
+welcome_player()
+ask_player_for_token_choice()
+get_player_token_choice()
