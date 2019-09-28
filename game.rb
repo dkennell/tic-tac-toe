@@ -1,4 +1,5 @@
 require 'paint'
+require 'byebug'
 require './lib/game_engine'
 include GameEngine
 
