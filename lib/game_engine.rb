@@ -8,7 +8,6 @@ module GameEngine
   end
 
   def play_next_move(board, token)
-    print_board(board)
     if human_plays_first?(token)
       human_makes_move(board, 'X')
       computer_makes_move(board, 'O')
@@ -25,9 +24,15 @@ module GameEngine
   end
 
   def computer_makes_move(board, token)
-    puts " ╚╚|░☀▄☀░|╝╝ computer moving"
+    puts " ╚╚|░☀▄☀░|╝╝ computer is thinking..."
+    sleep(2)
+    puts " "
     player_move_number = get_computer_player_move(board)
     new_board = make_move(board, token, player_move_number)
+    puts "computer moved!"
+    sleep(1)
+    print_board(new_board)
+    new_board
   end
 
   def print_board(board)
@@ -52,7 +57,6 @@ module GameEngine
   end
 
   def get_computer_player_move(board)
-    puts "Enter a number from 1 - 9 to make a move."
     generate_random_move_from_board(board)
   end
 
