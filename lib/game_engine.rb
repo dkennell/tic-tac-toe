@@ -2,7 +2,7 @@ module GameEngine
 
   def play_game(token)
     board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
-    while game_not_over?
+    while !game_over?
       play_next_move(board, token)
     end
   end
@@ -90,7 +90,15 @@ module GameEngine
     ["X", "x"].include?(token)
   end
 
-  def game_not_over?
-    true
+  def game_over?
+    game_won || game_tied
+  end
+
+  def game_won
+    # a list of possible win combos contains the board right now
+  end
+
+  def game_tied
+    # the board is full but game_won is false
   end
 end
