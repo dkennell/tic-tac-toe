@@ -9,10 +9,10 @@ module GameEngine
 
   def play_next_move(board, token)
     if human_plays_first?(token)
-      human_makes_move(board, 'X')
+      board = human_makes_move(board, 'X')
       computer_makes_move(board, 'O')
     else
-      computer_makes_move(board, 'X')
+      board = computer_makes_move(board, 'X')
       human_makes_move(board, 'O')
     end
   end
@@ -21,15 +21,23 @@ module GameEngine
     puts "Please choose your next move"
     player_move_number = get_human_player_move(board)
     new_board = make_move(board, token, player_move_number)
+    puts " "
+    puts "player moved!"
+    puts " "
+    sleep(1)
+    print_board(new_board)
+    new_board
   end
 
   def computer_makes_move(board, token)
+    puts " "
     puts " ╚╚|░☀▄☀░|╝╝ computer is thinking..."
     sleep(2)
     puts " "
     player_move_number = get_computer_player_move(board)
     new_board = make_move(board, token, player_move_number)
     puts "computer moved!"
+    puts " "
     sleep(1)
     print_board(new_board)
     new_board
@@ -41,10 +49,12 @@ module GameEngine
     puts "#{board[3]} | #{board[4]} | #{board[5]} "
     puts "----------"
     puts "#{board[6]} | #{board[7]} | #{board[8]} "
+    puts " "
   end
 
   def make_move(board, token, player_move_number)
     board[player_move_number - 1] = token
+    board
   end
 
   def welcome_player
@@ -53,6 +63,7 @@ module GameEngine
 
   def get_human_player_move(board)
     puts "Enter a number from 1 - 9 to make a move."
+    puts " "
     gets.strip().to_i
   end
 
