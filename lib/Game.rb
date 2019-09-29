@@ -85,7 +85,7 @@ class Game
   end
 
   def game_over?
-    game_won # || game_tied(board)
+    game_won || game_tied
   end
 
   def game_won
@@ -100,6 +100,21 @@ class Game
       end
     end
     return false
+  end
+
+  def game_tied
+    if !game_won && board_full
+      declare_tie
+      return true
+    end
+  end
+
+  def declare_tie
+    puts "Oh no! The game was a tie! You are both losers! :("
+  end
+
+  def board_full
+    !@board.any? { |square| square == " "}
   end
 
   def declare_victory(x_won)
@@ -134,37 +149,3 @@ class Game
     (subarray - array).empty?
   end
 end
-
-
-
-
-
-
-
-
-
-  #
-  # def human_plays_first?(token)
-  #   ["X", "x"].include?(token)
-  # end
-  #
-
-  #
-
-  #
-  #
-  # def game_tied(board)
-  #   # the board is full but game_won is false
-  # end
-  #
-
-
-#
-# if human_plays_first?(token)
-#   board = human_makes_move(board, 'X')
-#   computer_makes_move(board, 'O') unless board == "game over"
-# else
-#   board = computer_makes_move(board, 'X')
-#   human_makes_move(board, 'O') unless board == "game over"
-# end
-# puts "Game Over!"
