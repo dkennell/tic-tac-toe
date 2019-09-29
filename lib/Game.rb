@@ -17,37 +17,36 @@ class Game
   end
 
   def make_move(player_move_number)
-    @board[player_move_number - 1] = @current_player
+    @board[player_move_number - 1] = colorized_token(@current_player)
   end
 
   def human_makes_move
-    puts "Please choose your next move"
+    puts Paint["Please choose your next move", "#40ff67"]
     player_move_number = get_human_player_move
     make_move(player_move_number)
     puts " "
-    puts "player is thinking... 	(¬_¬'')	"
+    puts Paint["player is thinking... 	", "#40ff67"] + Paint["(¬_¬'')", "#ff9729"]
     puts " "
     sleep(2)
-    puts "player moved!"
+    puts Paint["player moved!", "#40ff67"]
     puts " "
     sleep(1)
     print_board
   end
 
   def get_human_player_move
-    puts "Enter a number from 1 - 9 to make a move."
+    puts Paint["Enter a number from 1 - 9 to make a move.", "#40ff67"]
     puts " "
     gets.strip().to_i
   end
-
   def computer_makes_move
     puts " "
-    puts " ╚╚|░☀▄☀░|╝╝ computer is thinking..."
+    puts Paint[" |░¬‸¬░| ", "#eca6ff"] + Paint["computer is thinking...", "#40ff67"]
     sleep(2)
     puts " "
     player_move_number = get_computer_player_move
     make_move(player_move_number)
-    puts "computer moved!"
+    puts Paint["computer moved!", "#40ff67"]
     puts " "
     sleep(1)
     print_board
@@ -110,7 +109,7 @@ class Game
   end
 
   def declare_tie
-    puts "Oh no! The game was a tie! You are both losers! :("
+    puts Paint["Oh no! The game was a tie! You are both losers! :(", "#40ff67"]
   end
 
   def board_full
@@ -127,12 +126,12 @@ class Game
 
   def declare_player_victory
     puts " "
-    puts "Player wins!"
+    puts "┻━┻ ︵ ╚|░>‸<░|ა  Player wins!  °˖✧◝(⁰▿⁰)◜✧˖°"
   end
 
   def declare_computer_victory
     puts " "
-    puts "Computer wins!"
+    puts "╚╚|░☀▄☀░|╝╝  Computer wins!  (╯°□°）╯︵ ┻━┻"
   end
 
   def print_board
@@ -143,6 +142,14 @@ class Game
     puts "#{@board[6]} | #{@board[7]} | #{@board[8]} "
     puts " "
     sleep(1)
+  end
+
+  def colorized_token(token)
+    if token.downcase == "x"
+      return Paint[token, "#f62a96"]
+    else
+      return Paint[token, "#88e3fd"]
+    end
   end
 
   def contains_subarray(array, subarray)
