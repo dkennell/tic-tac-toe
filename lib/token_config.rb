@@ -1,6 +1,6 @@
 module TokenConfig
   def ask_player_for_token_choice
-    puts Paint["Would you like to play as X or O?", :magenta]
+    puts Paint["Would you like to play as X or O? (X plays first)", :magenta]
   end
 
   def get_player_token_choice
