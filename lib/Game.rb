@@ -35,10 +35,15 @@ class Game
   end
 
   def get_human_player_move
-    puts Paint["Enter a number from 1 - 9 to make a move.", "#40ff67"]
-    puts " "
-    gets.strip().to_i
+    player_input = nil
+    while !valid_move?(player_input)
+      puts Paint["Enter a number from 1 - 9 to make a move.", "#40ff67"]
+      puts " "
+      player_input = gets.strip()
+    end
+    player_input.to_i
   end
+
   def computer_makes_move
     puts " "
     puts Paint[" |░¬‸¬░| ", "#eca6ff"] + Paint["computer is thinking...", "#40ff67"]
@@ -65,6 +70,10 @@ class Game
     board_slot_numbers_containing_a_given_value(" ")
   end
 
+  def occupied_squares
+    board_slot_numbers_containing_a_given_value(Paint["X", "#f62a96"]) + board_slot_numbers_containing_a_given_value(Paint["O", "#88e3fd"])
+  end
+
   def board_slot_numbers_containing_a_given_value(value)
     @board.each_with_index.map {
       |square, i| i + 1 if square.downcase == value.downcase
@@ -83,13 +92,27 @@ class Game
     @player_token.downcase == @current_player.downcase
   end
 
+  def valid_move?(input)
+    if occupied_squares.include?(input.to_i)
+      puts Paint["That space is already occupied - please try again.", :red]
+      return false
+    end
+    if ["1", "2", "3", "4", "5", "6", "7", "8", "9"].include?(input)
+      return true
+    end
+    if input != nil
+      puts Paint["Sorry, that's not a valid move.", :red]
+    end
+    false
+  end
+
   def game_over?
     game_won || game_tied
   end
 
   def game_won
-    board_slots_with_x = board_slot_numbers_containing_a_given_value("X")
-    board_slots_with_o = board_slot_numbers_containing_a_given_value("O")
+    board_slots_with_x = board_slot_numbers_containing_a_given_value(Paint["X", "#f62a96"])
+    board_slots_with_o = board_slot_numbers_containing_a_given_value(Paint["O", "#88e3fd"])
     WIN_COMBINATIONS.each do |combo|
       x_won = contains_subarray(board_slots_with_x, combo)
       o_won = contains_subarray(board_slots_with_o, combo)
@@ -108,9 +131,6 @@ class Game
     end
   end
 
-  def declare_tie
-    puts Paint["Oh no! The game was a tie! You are both losers! :(", "#40ff67"]
-  end
 
   def board_full
     !@board.any? { |square| square == " "}
@@ -126,12 +146,16 @@ class Game
 
   def declare_player_victory
     puts " "
-    puts "┻━┻ ︵ ╚|░>‸<░|ა  Player wins!  °˖✧◝(⁰▿⁰)◜✧˖°"
+    puts Paint["┻━┻ ︵ ╚|░>‸<░|ა  ", "#eca6ff"] + "Player wins!" + Paint["  °˖✧◝(⁰▿⁰)◜✧˖°", "#ff9729"]
   end
 
   def declare_computer_victory
     puts " "
-    puts "╚╚|░☀▄☀░|╝╝  Computer wins!  (╯°□°）╯︵ ┻━┻"
+    puts Paint["╚╚|░☀▄☀░|╝╝  ", "#eca6ff"] + "Computer wins!" + Paint["  (╯°□°）╯︵ ┻━┻", "#ff9729"]
+  end
+
+  def declare_tie
+    puts Paint["┻━┻ ︵ ╚|░>‸<░|ა ", "#eca6ff"] + Paint["Oh no! The game was a tie! You are both losers!", "#40ff67"] + Paint["(╯°□°）╯︵ ┻━┻", "#ff9729"]
   end
 
   def print_board
