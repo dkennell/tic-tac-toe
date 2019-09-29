@@ -1,104 +1,26 @@
 module GameEngine
+  require_relative './Game'
 
-  def play_game(token)
-    board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
-    while !game_over?
-      play_next_move(board, token)
-    end
-  end
-
-  def play_next_move(board, token)
-    if human_plays_first?(token)
-      board = human_makes_move(board, 'X')
-      computer_makes_move(board, 'O')
-    else
-      board = computer_makes_move(board, 'X')
-      human_makes_move(board, 'O')
-    end
-  end
-
-  def human_makes_move(board, token)
-    puts "Please choose your next move"
-    player_move_number = get_human_player_move(board)
-    new_board = make_move(board, token, player_move_number)
-    puts " "
-    puts "player is thinking... 	(¬_¬'')	"
-    puts " "
-    sleep(2)
-    puts "player moved!"
-    puts " "
-    sleep(1)
-    print_board(new_board)
-    new_board
-  end
-
-  def computer_makes_move(board, token)
-    puts " "
-    puts " ╚╚|░☀▄☀░|╝╝ computer is thinking..."
-    sleep(2)
-    puts " "
-    player_move_number = get_computer_player_move(board)
-    new_board = make_move(board, token, player_move_number)
-    puts "computer moved!"
-    puts " "
-    sleep(1)
-    print_board(new_board)
-    new_board
-  end
-
-  def print_board(board)
-    puts "#{board[0]} | #{board[1]} | #{board[2]} "
-    puts "----------"
-    puts "#{board[3]} | #{board[4]} | #{board[5]} "
-    puts "----------"
-    puts "#{board[6]} | #{board[7]} | #{board[8]} "
-    puts " "
-    sleep(1)
-  end
-
-  def make_move(board, token, player_move_number)
-    board[player_move_number - 1] = token
-    board
-  end
+  WIN_COMBINATIONS = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 6, 9],
+    [1, 5, 9],
+    [3, 5, 7]
+  ]
 
   def welcome_player
     puts Paint["Welcome to Tic Tac Toe!", :magenta]
   end
 
-  def get_human_player_move(board)
-    puts "Enter a number from 1 - 9 to make a move."
-    puts " "
-    gets.strip().to_i
-  end
-
-  def get_computer_player_move(board)
-    generate_random_move_from_board(board)
-  end
-
-  def generate_random_move_from_board(board)
-    move_options = get_move_options(board)
-    move_options.sample
-  end
-
-  def get_move_options(board)
-    board.each_with_index.map {
-      |square, i| i + 1 if square == " "
-    }.compact
-  end
-
-  def human_plays_first?(token)
-    ["X", "x"].include?(token)
-  end
-
-  def game_over?
-    game_won || game_tied
-  end
-
-  def game_won
-    # a list of possible win combos contains the board right now
-  end
-
-  def game_tied
-    # the board is full but game_won is false
+  def play_game(token)
+    board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+    game = Game.new(token, board)
+    while !game.game_over?
+      game.play_next_move
+    end
   end
 end
