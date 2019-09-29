@@ -22,6 +22,9 @@ module GameEngine
     player_move_number = get_human_player_move(board)
     new_board = make_move(board, token, player_move_number)
     puts " "
+    puts "player is thinking... 	(¬_¬'')	"
+    puts " "
+    sleep(2)
     puts "player moved!"
     puts " "
     sleep(1)
@@ -50,6 +53,7 @@ module GameEngine
     puts "----------"
     puts "#{board[6]} | #{board[7]} | #{board[8]} "
     puts " "
+    sleep(1)
   end
 
   def make_move(board, token, player_move_number)
