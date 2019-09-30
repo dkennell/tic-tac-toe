@@ -16,6 +16,21 @@ module GameEngine
     puts Paint["Welcome to Tic Tac Toe!", :magenta]
   end
 
+  def print_instructions
+    puts Paint["This game is played using the keyboard, and selecting the squares you want by entering the corresponding number for that square, shown below.", "#40ff67"]
+    puts " "
+  end
+
+  def print_example_board
+    puts "1 | 2 | 3 "
+    puts "----------"
+    puts "4 | 5 | 6 "
+    puts "----------"
+    puts "7 | 8 | 9 "
+    puts " "
+    sleep(1)
+  end
+
   def play_game(token)
     board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
     game = Game.new(token, board)

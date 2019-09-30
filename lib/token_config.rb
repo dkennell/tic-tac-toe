@@ -1,6 +1,6 @@
 module TokenConfig
   def ask_player_for_token_choice
-    puts Paint["Would you like to play as X or O? (X plays first)", :magenta]
+    puts Paint["Would you like to play as X or O? (X plays first)", "#40ff67"]
   end
 
   def get_player_token_choice
@@ -13,7 +13,7 @@ module TokenConfig
   end
 
   def get_user_token_input
-    puts Paint["(Please enter X or O and then hit enter)", :yellow]
+    puts Paint["(Please enter X or O and then hit enter)", "#40ff67"]
     token = gets.strip()
   end
 
