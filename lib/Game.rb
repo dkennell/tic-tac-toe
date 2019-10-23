@@ -1,3 +1,7 @@
+require_relative './graphics'
+
+include Graphics
+
 class Game
   attr_accessor :player_token, :current_player, :board
 
@@ -25,7 +29,7 @@ class Game
     player_move_number = get_human_player_move
     make_move(player_move_number)
     puts " "
-    puts Paint["player is thinking... 	", "#40ff67"] + Paint["(¬_¬'')", "#ff9729"]
+    puts Paint["player is thinking... 	", "#40ff67"] + player_thinking_graphic()
     puts " "
     sleep(2)
     puts Paint["player moved!", "#40ff67"]
@@ -46,7 +50,7 @@ class Game
 
   def computer_makes_move
     puts " "
-    puts Paint[" |░¬‸¬░| ", "#eca6ff"] + Paint["computer is thinking...", "#40ff67"]
+    puts computer_thinking_graphic() + Paint["computer is thinking...", "#40ff67"]
     sleep(2)
     puts " "
     player_move_number = get_computer_player_move
@@ -146,16 +150,16 @@ class Game
 
   def declare_player_victory
     puts " "
-    puts Paint["┻━┻ ︵ ╚|░>‸<░|ა  ", "#eca6ff"] + "Player wins!" + Paint["  °˖✧◝(⁰▿⁰)◜✧˖°", "#ff9729"]
+    puts computer_losing_graphic() + "Player wins!" + player_winning_graphic()
   end
 
   def declare_computer_victory
     puts " "
-    puts Paint["╚╚|░☀▄☀░|╝╝  ", "#eca6ff"] + "Computer wins!" + Paint["  (╯°□°）╯︵ ┻━┻", "#ff9729"]
+    puts computer_winning_graphic() + "Computer wins!" + player_losing_graphic()
   end
 
   def declare_tie
-    puts Paint["┻━┻ ︵ ╚|░>‸<░|ა ", "#eca6ff"] + Paint["Oh no! The game was a tie! You are both losers!", "#40ff67"] + Paint["(╯°□°）╯︵ ┻━┻", "#ff9729"]
+    puts computer_losing_graphic() + Paint["Oh no! The game was a tie! You are both losers!", "#40ff67"] + player_losing_graphic()
   end
 
   def print_board
